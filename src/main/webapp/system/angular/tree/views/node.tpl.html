@@ -1,0 +1,27 @@
+<div ng-attr-id="{{ 'ui-node-tree-' + node.id }}" ui-tree-handle
+     ng-click="treeCtrl.setActiveNode(node)"
+     class="tree-node tree-node-content"
+     ng-class="{'active': treeCtrl.isNodeActive(node)}">
+    <a class="btn btn-xs btn-noactive">
+        <span class="caretbox">
+            <span class="" ng-class="{invisible: node.children.length==0}">
+                <i class="glyphicon" ng-click="treeCtrl.ttt(node);toggle(this);$event.stopPropagation();"
+                   ng-class="{'glyphicon-triangle-right': collapsed, 'glyphicon-triangle-bottom': !collapsed}"></i>
+            </span>
+        </span>
+        <span class="name">
+            <span class="nameNode">{{node.description}}</span>
+        </span>
+    </a>
+</div>
+<ol ui-tree-nodes=""
+    ng-model="node.children"
+    ng-class="{hidden: collapsed}"
+    style="padding-left: 0px;">
+    <li style="padding-left: 20px;"
+        ng-repeat="node in node.children"
+        ui-tree-node
+        data-collapsed="true"
+        ng-include="'angular/tree/views/node.tpl.html'">
+    </li>
+</ol>

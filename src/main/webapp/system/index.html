@@ -7,6 +7,9 @@
     <!-- CSS -->
     <link rel="stylesheet" href="angular/main/libs/angular-ui-tree/angular-ui-tree.min.css">
     <link rel="stylesheet" href="angular/main/libs/angular-toaster/toaster.min.css">
+    <link rel="stylesheet" href="angular/main/libs/bootstrap-3.3.7/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="angular/main/libs/bootstrap-3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="angular/tree/assets/style.css">
 
     <!-- JS -->
     <script type="text/javascript" src="angular/main/libs/angularjs/angular.min.js"></script>
@@ -20,6 +23,10 @@
     <script type="text/javascript" src="angular/main/libs/lodash.js"></script>
     <script type="text/javascript" src="angular/main/libs/restangular/restangular.js"></script>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script type="text/javascript" src="angular/main/libs/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+    <!--<script type="text/javascript" src="angular/main/libs/bootstrap-3.3.7/js/npm.js"></script>-->
+
     <script type="text/javascript" src="angular/main/config/app.module.js"></script>
     <script type="text/javascript" src="angular/main/config/core.module.js"></script>
     <script type="text/javascript" src="angular/main/config/core.config.js"></script>
@@ -28,20 +35,14 @@
     <script type="text/javascript" src="angular/tree/config/tree.module.js"></script>
     <script type="text/javascript" src="angular/tree/controllers/tree.controller.js"></script>
     <script type="text/javascript" src="angular/tree/services/node.service.js"></script>
+    <script type="text/javascript" src="angular/tree/controllers/node.edit.controller.js"></script>
+
 </head>
 <body>
-    <div class="title">
-        <h2>Sistema para teste de tree</h2>
-    </div>
-    <div class="content" ng-app="com.system.main">
-        <div class="left-content" ng-controller="TreeController as treeCtrl">
-            Hello <input type="text" ng-model="yourName" />
-            <hr/>
-            <h1>Hello, {{yourName}}</h1>
-        </div>
-        <div class="right-content">
-
-        </div>
+    <div class="title"> </div>
+    <div class="page-content" ng-app="com.system.main">
+        <div class="left-content" ng-include="'angular/tree/views/tree.view.html'" ng-controller="TreeController as treeCtrl"></div>
+        <div class="right-content"></div>
     </div>
 </body>
 </html>

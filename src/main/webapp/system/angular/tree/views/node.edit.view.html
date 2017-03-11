@@ -1,0 +1,57 @@
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<div class="">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="nodeEditionCtrl.cancel()" data-dismiss="modal"
+                aria-hidden="true">&times;</button>
+        <h3 class="modal-title">
+            EDIT
+        </h3>
+    </div>
+
+    <div class="modal-body">
+
+        <form name="nodeEditionCtrl.nodeForm" class="form-validate">
+            <div class="form-group code-field">
+                <label>Código*</label>
+                <input type="text" placeholder="Informe um código" name="nodeCode"
+                       ng-model="nodeEditionCtrl.currentNode.code"
+                       ng-change="nodeEditionCtrl.nodeForm.$submitted = false;" maxlength="255"
+                       class="form-control" required=""/>
+                <div ng-if="nodeEditionCtrl.nodeForm.$submitted">
+                    <div ng-if="nodeEditionCtrl.nodeForm.nodeCode.$error.required" class="text-danger">
+                        Campo obrigatório
+                    </div>
+                </div>
+            </div>
+            <div class="form-group description-field">
+                <label>Descrição*</label>
+                <input type="text" placeholder="Informe uma descrição" name="nodeDescription"
+                       ng-model="nodeEditionCtrl.currentNode.description"
+                       ng-change="nodeEditionCtrl.nodeForm.$submitted = false;" maxlength="255"
+                       class="form-control" required=""/>
+                <div ng-if="nodeEditionCtrl.nodeForm.$submitted">
+                    <div ng-if="nodeEditionCtrl.nodeForm.nodeDescription.$error.required" class="text-danger">
+                        Campo obrigatório
+                    </div>
+                </div>
+            </div>
+            <div class="form-group note-field">
+                <label>Observação</label>
+                <textarea placeholder="Informe uma observação" rows="5" maxlength="2000"
+                    name="nodeNote" ng-model="nodeEditionCtrl.currentNode.note"
+                    class="form-control"></textarea>
+            </div>
+        </form>
+    </div>
+
+    <div class="modal-footer">
+        <button ng-click="nodeEditionCtrl.cancel()" class="btn btn-link" data-dismiss="modal">
+            Cancelar
+        </button>
+        <button type="submit" ng-click="nodeEditionCtrl.save()" class="btn btn-primary" type="button">
+            Salvar
+        </button>
+    </div>
+</div>
