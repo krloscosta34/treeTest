@@ -23,7 +23,7 @@ public interface PersonService
 	public Person create(Person person);
 
 	/**
-	 * Atualiza/mergia uma pessoa no banco
+	 * Atualiza/mergeia uma pessoa no banco
 	 *
 	 * @param person
 	 */

@@ -21,7 +21,7 @@ import com.costa.service.PersonService;
 
 @Named
 
-@Path("/person")
+@Path("/entity/person")
 public class PersonRest
 {
 	private PersonService service = new PersonServiceImpl();
@@ -76,7 +76,7 @@ public class PersonRest
 	@PUT
 	@Produces("application/json; charset=UTF-8")
 	@Consumes("application/json; charset=UTF-8")
-	@Path("/alterar")
+	@Path("/update")
 	public String update(PersonVO personVO)
 	{
 		Person entity = new Person();

@@ -3,8 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <title>Tree System</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="angular/main/libs/angular-ui-tree/angular-ui-tree.min.css">
+    <link rel="stylesheet" href="angular/main/libs/angular-toaster/toaster.min.css">
+
+    <!-- JS -->
+    <script type="text/javascript" src="angular/main/libs/angularjs/angular.min.js"></script>
+    <script type="text/javascript" src="angular/main/libs/angular-ui/ui-bootstrap-tpls-2.5.0.min.js"></script>
+    <script type="text/javascript" src="angular/main/libs/angular-ui-tree/angular-ui-tree.min.js"></script>
+    <script type="text/javascript" src="angular/main/libs/angular-sanitize.min.js"></script>
+    <script type="text/javascript" src="angular/main/libs/angular-resource.min.js"></script>
+    <script type="text/javascript" src="angular/main/libs/angular-animate.min.js"></script>
+    <script type="text/javascript" src="angular/main/libs/angular-loader.min.js"></script>
+    <script type="text/javascript" src="angular/main/libs/angular-toaster/toaster.min.js"></script>
+    <script type="text/javascript" src="angular/main/libs/lodash.js"></script>
+    <script type="text/javascript" src="angular/main/libs/restangular/restangular.js"></script>
+
+    <script type="text/javascript" src="angular/main/config/app.module.js"></script>
+    <script type="text/javascript" src="angular/main/config/core.module.js"></script>
+    <script type="text/javascript" src="angular/main/config/core.config.js"></script>
+    <script type="text/javascript" src="angular/main/config/core.constant.js.jsp"></script>
+
+    <script type="text/javascript" src="angular/tree/config/tree.module.js"></script>
+    <script type="text/javascript" src="angular/tree/controllers/tree.controller.js"></script>
+    <script type="text/javascript" src="angular/tree/services/node.service.js"></script>
 </head>
 <body>
-    Hello, Tree
+    <div class="title">
+        <h2>Sistema para teste de tree</h2>
+    </div>
+    <div class="content" ng-app="com.system.main">
+        <div class="left-content" ng-controller="TreeController as treeCtrl">
+            Hello <input type="text" ng-model="yourName" />
+            <hr/>
+            <h1>Hello, {{yourName}}</h1>
+        </div>
+        <div class="right-content">
+
+        </div>
+    </div>
 </body>
 </html>

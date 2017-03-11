@@ -2,12 +2,11 @@ package com.costa.engine.persist;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
 /**
  * Created by Carlos on 05/03/2017.
  */
-public class PersistEngine
+public class Persister
 {
 	private static EntityManagerFactory entityManagerFactory;
 
@@ -18,12 +17,12 @@ public class PersistEngine
 
 	public static void setEntityManagerFactory(EntityManagerFactory entityManagerFactory)
 	{
-		PersistEngine.entityManagerFactory = entityManagerFactory;
+		Persister.entityManagerFactory = entityManagerFactory;
 	}
 
 	public static EntityManager getEntityManager()
 	{
-		return PersistEngine.entityManagerFactory.createEntityManager();
+		return Persister.entityManagerFactory.createEntityManager();
 	}
 
 

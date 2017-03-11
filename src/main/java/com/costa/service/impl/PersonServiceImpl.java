@@ -15,22 +15,6 @@ public class PersonServiceImpl implements PersonService
 	private PersonDAO dao = new PersonDAOImpl();
 
 	@Override
-	public Person create(Person person)
-	{
-		//Aqui vão as regras de negócio
-
-		return dao.persist(person);
-	}
-
-	@Override
-	public Person update(Person person)
-	{
-		//Aqui vão as regras de negócio
-
-		return dao.merge(person);
-	}
-
-	@Override
 	public List<Person> findAll()
 	{
 
@@ -45,6 +29,22 @@ public class PersonServiceImpl implements PersonService
 		//Aqui vão as regras de negócio
 
 		return dao.findById(id);
+	}
+
+	@Override
+	public Person create(Person person)
+	{
+		//Aqui vão as regras de negócio
+
+		return dao.persist(person);
+	}
+
+	@Override
+	public Person update(Person person)
+	{
+		//Aqui vão as regras de negócio
+
+		return dao.merge(person);
 	}
 
 	@Override
