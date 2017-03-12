@@ -34,6 +34,10 @@
     font-size: 14px;
 }
 
+.section-actions .action-option.inactive {
+    color: #999;
+}
+
 .section-actions .pull-left .action-option {
     margin-right: 5px;
 }
@@ -99,3 +103,8 @@
     float: left;
 }
 
+.modal .modal-header,
+.modal .modal-body,
+.modal .modal-footer {
+    padding: 10px;
+}

@@ -6,11 +6,19 @@
         <button type="button" class="close" ng-click="nodeEditionCtrl.cancel()" data-dismiss="modal"
                 aria-hidden="true">&times;</button>
         <h3 class="modal-title">
-            EDIT
+            <span ng-if="nodeEditionCtrl.mode=='new'">Criar nó</span>
+            <span ng-if="nodeEditionCtrl.mode=='edit'">Editar nó</span>
         </h3>
     </div>
 
     <div class="modal-body">
+
+        <div uib-alert
+             ng-repeat="alert in nodeEditionCtrl.alerts"
+             ng-class="'alert-' + (alert.type || 'warning')"
+             close="nodeEditionCtrl.closeAlert($index)">
+            {{alert.msg}}
+        </div>
 
         <form name="nodeEditionCtrl.nodeForm" class="form-validate">
             <div class="form-group code-field">

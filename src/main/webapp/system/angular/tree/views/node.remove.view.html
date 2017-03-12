@@ -1,0 +1,25 @@
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<div class="">
+    <div class="modal-header">
+        <button type="button" class="close" ng-click="nodeRemovalCtrl.cancel()" data-dismiss="modal"
+                aria-hidden="true">&times;</button>
+        <h3 class="modal-title">
+            <span>Remover nó</span>
+        </h3>
+    </div>
+
+    <div class="modal-body">
+        Ao remover este nó, você também removerá nós filhos (caso ele tenha). Deseja continuar?
+    </div>
+
+    <div class="modal-footer">
+        <button ng-click="nodeRemovalCtrl.cancel()" class="btn btn-link" data-dismiss="modal">
+            Cancelar
+        </button>
+        <button type="submit" ng-click="nodeRemovalCtrl.remove()" class="btn btn-danger" type="button">
+            Continuar
+        </button>
+    </div>
+</div>

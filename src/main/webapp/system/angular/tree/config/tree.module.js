@@ -3,7 +3,7 @@
 
     angular
         .module('com.module.tree', [
-            'com.system.core'
-            
+            'com.system.core',
+            'ui.tree'
         ]);
 })();

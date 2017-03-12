@@ -1,12 +1,15 @@
 package com.costa.rest;
 
+import com.costa.engine.exception.CustomException;
 import com.costa.entity.Node;
 import com.costa.service.NodeService;
 import com.costa.service.impl.NodeServiceImpl;
 import com.costa.vo.NodeVO;
+import com.costa.vo.ResponseVO;
 
 import javax.inject.Named;
 import javax.ws.rs.*;
+import javax.ws.rs.core.MediaType;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +21,7 @@ public class NodeRest
 	private NodeService service = new NodeServiceImpl();
 
 	@GET
-	@Produces("application/json; charset=UTF-8")
+	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/findAll")
 	public List<NodeVO> findAll()
 	{
@@ -33,7 +36,7 @@ public class NodeRest
 	}
 
 	@GET
-	@Produces("application/json; charset=UTF-8")
+	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/findById/{id}")
 	public NodeVO findById(
 			@PathParam("id")
@@ -46,80 +49,113 @@ public class NodeRest
 	}
 
 	@POST
-	@Consumes("application/json; charset=UTF-8")
-	@Produces("application/json; charset=UTF-8")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/create/{parentId}")
-	public Node create(NodeVO noteVO,
+	public ResponseVO create(NodeVO nodeVO,
 			@PathParam("parentId")
 					Long parentId)
 	{
-		Node entity = new Node();
+		ResponseVO response = new ResponseVO();
 		try
 		{
-			Node parent = service.findById(parentId);
+			Node entity = new Node();
+			Node parent = null;
+			if(parentId != -1)
+			{
+				parent = service.findById(parentId);
+				if(parent == null)
+					throw new CustomException("Não foi possível encontrar o registro de nó pai para a criação!");
+			}
 
-			entity.setId(noteVO.getId());
-			entity.setCode(noteVO.getCode());
-			entity.setDescription(noteVO.getDescription());
-			entity.setNote(noteVO.getNote());
+			entity.setCode(nodeVO.getCode());
+			entity.setDescription(nodeVO.getDescription());
+			entity.setNote(nodeVO.getNote());
 			entity.setParent(parent);
-			return service.create(entity);
+			entity = service.create(entity);
+
+			nodeVO.setId(entity.getId());
+//			response.setEntity(nodeVO);
+			response.setEntity(entity.getId());
+			return response;
+		}
+		catch(CustomException e)
+		{
+			response.setSuccess(false);
+			response.setErrorMsg(e.getMessage());
+			return response;
 		}
 		catch(Exception e)
 		{
-			return null;
+			response.setSuccess(false);
+			response.setErrorMsg("Erro ao criar o registro! " + e.getMessage());
+			return response;
 		}
 	}
 
 	@PUT
-	@Produces("application/json; charset=UTF-8")
-	@Consumes("application/json; charset=UTF-8")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Path("/update/{nodeId}")
-	public String update(NodeVO noteVO,
+	public ResponseVO update(NodeVO nodeVO,
 			@PathParam("nodeId")
 					Long nodeId)
 	{
+		ResponseVO response = new ResponseVO();
 		try
 		{
 			Node entity = service.findById(nodeId);
-			if(entity != null)
-			{
-				entity.setCode(noteVO.getCode());
-				entity.setDescription(noteVO.getDescription());
-				entity.setNote(noteVO.getNote());
-				service.update(entity);
-				return "Registro alterado com sucesso!";
-			}
-			return "Erro ao alterar o registro!";
+			if(entity == null)
+				throw new CustomException("Não foi possível encontrar o registro para a atualização!");
 
+			entity.setCode(nodeVO.getCode());
+			entity.setDescription(nodeVO.getDescription());
+			entity.setNote(nodeVO.getNote());
+			service.update(entity);
+			return response;
+		}
+		catch(CustomException e)
+		{
+			response.setSuccess(false);
+			response.setErrorMsg(e.getMessage());
+			return response;
 		}
 		catch(Exception e)
 		{
-			return "Erro ao alterar o registro " + e.getMessage();
+			response.setSuccess(false);
+			response.setErrorMsg("Erro ao atualizar o registro! " + e.getMessage());
+			return response;
 		}
 	}
 
 	@DELETE
-	@Produces("application/json; charset=UTF-8")
+	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/remove/{id}")
-	public String remove(
+	public ResponseVO remove(
 			@PathParam("id")
 					Long id)
 	{
+		ResponseVO response = new ResponseVO();
 		try
 		{
 			Node entity = service.findById(id);
-			if(entity != null)
-			{
-				service.remove(entity);
+			if(entity == null)
+				throw new CustomException("Não foi possível encontrar o registro para a remoção!");
 
-				return "Registro excluido com sucesso!";
-			}
-			return "Erro ao excluir o registro!";
+			service.remove(entity);
+			return response;
+		}
+		catch(CustomException e)
+		{
+			response.setSuccess(false);
+			response.setErrorMsg(e.getMessage());
+			return response;
 		}
 		catch(Exception e)
 		{
-			return "Erro ao excluir o registro! " + e.getMessage();
+			response.setSuccess(false);
+			response.setErrorMsg("Erro ao excluir o registro! " + e.getMessage());
+			return response;
 		}
 	}
 }

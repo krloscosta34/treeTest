@@ -1,11 +1,11 @@
 package com.costa.vo;
 
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.Serializable;
 
 @XmlRootElement
-public class PersonVO
+public class PersonVO implements Serializable
 {
-
 	private int codigo;
 	private String nome;
 	private String sexo;

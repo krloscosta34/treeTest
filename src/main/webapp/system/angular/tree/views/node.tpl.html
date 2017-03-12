@@ -4,8 +4,8 @@
      ng-class="{'active': treeCtrl.isNodeActive(node)}">
     <a class="btn btn-xs btn-noactive">
         <span class="caretbox">
-            <span class="" ng-class="{invisible: node.children.length==0}">
-                <i class="glyphicon" ng-click="treeCtrl.ttt(node);toggle(this);$event.stopPropagation();"
+            <span class="" ng-class="{'invisible': !treeCtrl.hasChildren(node)}" data-nodrag>
+                <i class="glyphicon" ng-click="toggle(this);$event.stopPropagation();"
                    ng-class="{'glyphicon-triangle-right': collapsed, 'glyphicon-triangle-bottom': !collapsed}"></i>
             </span>
         </span>
@@ -21,7 +21,6 @@
     <li style="padding-left: 20px;"
         ng-repeat="node in node.children"
         ui-tree-node
-        data-collapsed="true"
         ng-include="'angular/tree/views/node.tpl.html'">
     </li>
 </ol>

@@ -1,9 +1,6 @@
 package com.costa.vo;
 
-import javax.xml.bind.annotation.XmlRootElement;
-
-@XmlRootElement
-public class NodeVO
+public class NodeVO implements java.io.Serializable
 {
 	private Long id;
 	private String code;

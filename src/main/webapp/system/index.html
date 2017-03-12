@@ -14,7 +14,6 @@
     <!-- JS -->
     <script type="text/javascript" src="angular/main/libs/angularjs/angular.min.js"></script>
     <script type="text/javascript" src="angular/main/libs/angular-ui/ui-bootstrap-tpls-2.5.0.min.js"></script>
-    <script type="text/javascript" src="angular/main/libs/angular-ui-tree/angular-ui-tree.min.js"></script>
     <script type="text/javascript" src="angular/main/libs/angular-sanitize.min.js"></script>
     <script type="text/javascript" src="angular/main/libs/angular-resource.min.js"></script>
     <script type="text/javascript" src="angular/main/libs/angular-animate.min.js"></script>
@@ -22,6 +21,7 @@
     <script type="text/javascript" src="angular/main/libs/angular-toaster/toaster.min.js"></script>
     <script type="text/javascript" src="angular/main/libs/lodash.js"></script>
     <script type="text/javascript" src="angular/main/libs/restangular/restangular.js"></script>
+    <script type="text/javascript" src="angular/main/libs/angular-ui-tree/angular-ui-tree.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <script type="text/javascript" src="angular/main/libs/bootstrap-3.3.7/js/bootstrap.min.js"></script>
@@ -36,12 +36,17 @@
     <script type="text/javascript" src="angular/tree/controllers/tree.controller.js"></script>
     <script type="text/javascript" src="angular/tree/services/node.service.js"></script>
     <script type="text/javascript" src="angular/tree/controllers/node.edit.controller.js"></script>
+    <script type="text/javascript" src="angular/tree/controllers/node.remove.controller.js"></script>
 
 </head>
 <body>
     <div class="title"> </div>
     <div class="page-content" ng-app="com.system.main">
-        <div class="left-content" ng-include="'angular/tree/views/tree.view.html'" ng-controller="TreeController as treeCtrl"></div>
+        <div class="left-content"
+            ng-include="'angular/tree/views/tree.view.html'"
+            ng-controller="TreeController as treeCtrl"
+            ng-init="treeCtrl.initCtrl();">
+        </div>
         <div class="right-content"></div>
     </div>
 </body>

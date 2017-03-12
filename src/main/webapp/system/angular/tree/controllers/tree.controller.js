@@ -9,41 +9,7 @@
 
         var _self = this;
 
-        _self.nodeList = [
-            {
-                id: 1,
-                description: "Asgard",
-                children: [
-                    {
-                        id: 2,
-                        description: "Boston",
-                        children: [
-                            {
-                                id: 3,
-                                description: "Central City",
-                                children: [
-                                    {
-                                        id: 4,
-                                        description: "Divinópolis",
-                                        children: []
-                                    }
-                                ]
-                            }
-                        ]
-                    },
-                    {
-                        id: 5,
-                        description: "Egito",
-                        children: []
-                    },
-                    {
-                        id: 6,
-                        description: "Far Far Way",
-                        children: []
-                    }
-                ]
-            }
-        ];
+        _self.nodeList = [];
         _self.activeNode = null;
 
         // folder
@@ -57,10 +23,9 @@
             _self.filterFolder.dontFindParent = false,
             _self.folderLoader = false;
 
-        _self.init = function () {
-            //_self.loadFolders();
+        _self.initCtrl = function () {
             NodeService.findByAll(function (data) {
-                console.log(data);
+                _self.nodeList = data;
             });
         };
 
@@ -85,34 +50,80 @@
             });
         };
 
-        _self.openEditionModal = function () {
-            
-            var node = _self.activeNode;
+        _self.createNode = function () {
+            _self.openEditionModal(
+                {
+                    mode: 'new',
+                    node: {},
+                    parentId: _self.activeNode != null ? _self.activeNode.id : undefined,
+                    callback: function (node) {
+                        if(_self.activeNode != null) {
+                            if(_self.activeNode.children == null || _self.activeNode.children != undefined)
+                                _self.activeNode.children = [];
+                            _self.activeNode.children.push(node);
+                        }
+                        else {
+                            _self.nodeList.push(node);
+                        }
+                    }
+                });
+        };
+
+        _self.editNode = function () {
+            if(_self.activeNode == null)
+                return;
+            _self.openEditionModal(
+                {
+                    mode: 'edit',
+                    node: _self.activeNode,
+                    callback: function (node) {
+                        angular.merge(_self.activeNode, node);
+                    }
+                });
+        };
+
+        _self.openEditionModal = function (params) {
+
             var modalInstance = $uibModal.open({
                 windowClass: 'node-editing-modal',
                 templateUrl: 'angular/tree/views/node.edit.view.html',
                 controller: 'NodeEditionController as nodeEditionCtrl',
                 resolve: {
+                    mode: function () {
+                        return params.mode;
+                    },
                     node: function () {
-                        return angular.copy(node);
+                        return angular.copy(params.node);
+                    },
+                    parentId: function () {
+                        return params.parentId;
                     }
                 }
             });
-
             modalInstance.result.then(function (result) {
-                if (result != null) {
-                    _self.changeFolder = true;
-                    for (var key in result) {
-                        if (key != "$$hashKey") {
-                            node[key] = result[key];
+                if(params.callback != undefined){
+                    params.callback(result);
+                }
+            });
+        };
+
+        _self.removeNode = function () {
+            if(_self.activeNode != null){
+                var modalInstance = $uibModal.open({
+                    windowClass: 'node-editing-modal',
+                    templateUrl: 'angular/tree/views/node.remove.view.html',
+                    controller: 'NodeRemovalController as nodeRemovalCtrl',
+                    resolve: {
+                        node: function () {
+                            return angular.copy(_self.activeNode);
                         }
                     }
-                    _self.update(node);
-                }
-            });
-
-            return false;
-
+                });
+                modalInstance.result.then(function () {
+                    //ACHAR E REMOVER NÓ??
+                    delete _self.activeNode;
+                });
+            }
         };
 
         _self.isNodeActive = function (node) {
@@ -124,17 +135,33 @@
         };
 
         _self.setActiveNode = function (node) {
-            if (node == null && node == undefined)
-                return;
             _self.activeNode = node;
-            console.log("HEY");
         };
         
-        _self.ttt = function (node) {
-            console.log("WOW");
+        _self.hasChildren = function (node) {
+            return node.children != undefined && node.children != null && node.children.length > 0;
         };
 
-        _self.init();
+        /*************************************** ANGULAR-UI-TREE ***************************************/
+        _self.collapseAll = function () {
+            _self.setActiveNode(null);
+            $scope.$broadcast('angular-ui-tree:collapse-all');
+        };
+        _self.expandAll = function () {
+            _self.setActiveNode(null);
+            $scope.$broadcast('angular-ui-tree:expand-all');
+        };
+        _self.scope = $scope;
+        _self.resetEmptyElement = function () {
+            if ((!$scope.$nodesScope.$modelValue || $scope.$nodesScope.$modelValue.length === 0) &&
+                $scope.emptyPlaceholderEnabled) {
+                $element.append($scope.$emptyElm);
+            } else {
+                $scope.$emptyElm.remove();
+            }
+        };
+        $scope.resetEmptyElement = _self.resetEmptyElement;
+        /***********************************************************************************************/
 
     }
 

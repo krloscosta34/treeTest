@@ -10,50 +10,39 @@
         var _self = this;
         _self.entityService = Restangular.all("/entity/node/");
 
-        this.findByAll = function (findByFilterSuccess) {
+        this.findByAll = function (successFn) {
             _self.entityService.customGET("findAll").then(function (response) {
-                findByFilterSuccess(response);
+                successFn(response);
             });
-
         };
 
-        this.findByFilter = function (filter, findByFilterSuccess) {
+        this.findByFilter = function (filter, successFn) {
             _self.entityService.customGET("findByFilter", filter).then(function (response) {
-                findByFilterSuccess(response);
-            });
-
-        };
-
-        this.findById = function (neoId, findByIdSuccess) {
-            _self.entityService.customGET("findById/" + neoId).then(function (response) {
-                findByIdSuccess(response);
-            });
-
-        };
-
-        this.save = function (entity, saveSuccess) {
-            _self.entityService.customPOST(entity, "save").then(function (response) {
-                saveSuccess(response);
+                successFn(response);
             });
         };
 
-        this.update = function (neoId, entity, updateSuccess) {
-            _self.entityService.customPUT(entity, "update/" + neoId).then(function (response) {
-                updateSuccess(response);
+        this.findById = function (id, successFn) {
+            _self.entityService.customGET("findById/" + id).then(function (response) {
+                successFn(response);
             });
         };
 
-        this.remove = function (neoId, removeSucess) {
-            _self.entityService.customDELETE("remove/" + neoId).then(function (response) {
-                removeSucess(response);
+        this.create = function (entity, parentId, successFn) {
+            _self.entityService.customPOST(entity, "create/" + parentId).then(function (response) {
+                successFn(response);
             });
         };
 
-        this.moveFolder = function (neoId, neoIdNewParent, moveSuccess, moveFailure) {
-            _self.entityService.customPUT({}, "move/" + neoId + "/" + neoIdNewParent).then(function (response) {
-                moveSuccess(response);
-            }, function (response) {
-                moveFailure(response);
+        this.update = function (id, entity, successFn) {
+            _self.entityService.customPUT(entity, "update/" + id).then(function (response) {
+                successFn(response);
+            });
+        };
+
+        this.remove = function (id, successFn) {
+            _self.entityService.customDELETE("remove/" + id).then(function (response) {
+                successFn(response);
             });
         };
 
