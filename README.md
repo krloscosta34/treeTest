@@ -18,7 +18,8 @@ Esta é uma aplicação que representa uma estrutura de arvore. Além de exibir 
 * Check in no projeto;
 * Importar como maven project;
 * Acessar o arquivo 'persistence.xml' e alterar base e credenciais do MySQL;
-* Montar o servidor:
-** Servidor Tomcat 9;
-** Adicionar deploy de artefato war exploded;
-** Adicionar "/TreeTest" como contexto da aplicação.
+* Montar o servidor: (1) Servidor Tomcat 9; (2) Adicionar deploy de artefato war exploded; (3) Adicionar "/TreeTest" como contexto da aplicação.
+
+### Autor ###
+Carlos H. Costa
+<krloscosta34@gmail.com>
