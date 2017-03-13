@@ -1,6 +1,6 @@
 # Tree Test System #
 
-Esta é uma aplicação que representa uma estrutura de arvore. Além de exibir a estrutura ela permiti adicionar, editar, excluir os nós da arvore e também fazer busca pela descrição do nó.
+Esta é uma aplicação que representa uma estrutura de arvore. Além de exibir a estrutura ela permite adicionar, editar, excluir os nós da arvore e também fazer busca pela descrição do nó.
 
 ### Desenvolvimento do projeto ###
 
