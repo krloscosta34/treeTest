@@ -1,7 +1,8 @@
 (function () {
     'use strict'
 
-    angular.module('com.module.tree')
+    angular
+        .module('com.module.tree')
         .controller('TreeController', TreeController);
 
     TreeController.$inject = ['NodeService', /*'LocatorHelpers',*/ '$scope', '$rootScope', '$uibModal', 'toaster', 'CORE_CONFIG'];
@@ -11,42 +12,34 @@
 
         _self.nodeList = [];
         _self.activeNode = null;
-
-        // folder
-        _self.filterFolder = new Object();
-        _self.filterFolder.name = '';
-        _self.filterFolder.count = 0;
-        _self.filterFolder.startRow = 1;
-        _self.filterFolder.pageSize = 30;
-        _self.filterFolder.orderBy = {"field": "name", "type": "ASC"};
-        _self.filterFolder.fatherId = null,
-            _self.filterFolder.dontFindParent = false,
-            _self.folderLoader = false;
+        _self.searchTerm = '';
+        _self.loadingNodes = true;
 
         _self.initCtrl = function () {
-            NodeService.findByAll(function (data) {
+            _self.initNodes();
+        };
+        
+        _self.initNodes = function () {
+            _self.activeNode = null;
+            _self.loadingNodes = true;
+            NodeService.findRootNodes(function (data) {
                 _self.nodeList = data;
+                _self.loadingNodes = false;
             });
         };
 
-        _self.loadFolders = function () {
+        _self.findByDescription = function () {
+            
+            if(_self.searchTerm.trim() == '') {
+                _self.initNodes();
+                return;
+            }
 
-            NodeService.findByFilter(_self.filterFolder, function (data) {
-
-                data.data.forEach(function (folder, idx) {
-                    folder.children = [];
-                });
-
-                if (_self.nodeList.length >= 1) {
-                    _self.nodeList = _self.nodeList.concat(data.data);
-                } else {
-
-                    _self.nodeList = data.data;
-                }
-
-                _self.setStartNode(_self.nodeList);
-
-                _self.folderLoader = false;
+            _self.activeNode = null;
+            _self.loadingNodes = true;
+            NodeService.findByDescription(_self.searchTerm, function (data) {
+                _self.nodeList = data;
+                _self.loadingNodes = false;
             });
         };
 
@@ -58,7 +51,7 @@
                     parentId: _self.activeNode != null ? _self.activeNode.id : undefined,
                     callback: function (node) {
                         if(_self.activeNode != null) {
-                            if(_self.activeNode.children == null || _self.activeNode.children != undefined)
+                            if(_self.activeNode.children == null || _self.activeNode.children == undefined)
                                 _self.activeNode.children = [];
                             _self.activeNode.children.push(node);
                         }
@@ -120,10 +113,26 @@
                     }
                 });
                 modalInstance.result.then(function () {
-                    //ACHAR E REMOVER NÓ??
-                    delete _self.activeNode;
+                    _self.removeNodeFromTree(_self.activeNode, _self.nodeList);
                 });
             }
+        };
+
+        _self.removeNodeFromTree = function (node, list) {
+            for(var i=0; i< list.length; i++){
+                if(list[i].id == node.id){
+                    list.splice(i, 1);
+                    return true;
+                }
+                if(list[i].children != undefined && list[i].children != null && list[i].children.length > 0)
+                {
+                    var r = _self.removeNodeFromTree(node, list[i].children);
+                    if(r) {
+                        return true;
+                    }
+                }
+            }
+            return false;
         };
 
         _self.isNodeActive = function (node) {
@@ -140,6 +149,14 @@
         
         _self.hasChildren = function (node) {
             return node.children != undefined && node.children != null && node.children.length > 0;
+        };
+
+        _self.getTooltipMsg = function (node) {
+            var msg = '';
+            msg += 'Código: ' + node.code + ' | ';
+            msg += 'Descrição: ' + node.description + ' | ';
+            msg += 'Observação: ' + (node.note != undefined && node.note != null ? node.note : "-");
+            return msg;
         };
 
         /*************************************** ANGULAR-UI-TREE ***************************************/
@@ -162,7 +179,6 @@
         };
         $scope.resetEmptyElement = _self.resetEmptyElement;
         /***********************************************************************************************/
-
     }
 
 })();

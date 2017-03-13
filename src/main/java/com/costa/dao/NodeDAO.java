@@ -13,9 +13,22 @@ public interface NodeDAO extends BaseDao<Node>
 	public List<Node> findAll();
 
 	/**
+	 * Busca os nós raízes
+	 *
+	 */
+	public List<Node> findRootNodes();
+
+	/**
 	 * Busca um nó pelo ID
 	 *
 	 * @param id	ID do nó
 	 */
 	public Node findById(Long id);
+
+	/**
+	 * Busca nós por decrição
+	 *
+	 * @param description
+	 */
+	public List<Node> findByDescription(String description);
 }

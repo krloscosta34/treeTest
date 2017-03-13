@@ -15,6 +15,13 @@ public interface BaseDao<T extends BaseEntity>
 	public List<T> findAll(String entityName, String orderByField);
 
 	/**
+	 * Busca objetos no banco por meio de uma query
+	 *
+	 * @param query		query a ser executada
+	 */
+	public List<T> findByQuery(String query);
+
+	/**
 	 * Encontrar um objeto pelo id
 	 *
 	 * @param id

@@ -65,8 +65,8 @@ public class Node extends BaseEntity
 
 	@ManyToOne(cascade = {CascadeType.DETACH, CascadeType.REFRESH}, fetch = FetchType.LAZY)
 	@JoinTable(name = "Node_ParentChild", joinColumns = {
-			@JoinColumn(name = "parent_id", referencedColumnName = "id")}, inverseJoinColumns = {
-			@JoinColumn(name = "child_id", referencedColumnName = "id")})
+			@JoinColumn(name = "child_id", referencedColumnName = "id")}, inverseJoinColumns = {
+			@JoinColumn(name = "parent_id", referencedColumnName = "id")})
 //	@JsonBackReference(value = "parent-children")
 	public Node getParent()
 	{
@@ -78,10 +78,10 @@ public class Node extends BaseEntity
 		this.parent = parent;
 	}
 
-	@OneToMany(cascade = {CascadeType.DETACH, CascadeType.REFRESH}, fetch = FetchType.LAZY)
+	@OneToMany(cascade = {CascadeType.DETACH, CascadeType.REFRESH, CascadeType.REMOVE}, fetch = FetchType.LAZY)
 	@JoinTable(name = "Node_ParentChild", joinColumns = {
-			@JoinColumn(name = "child_id", referencedColumnName = "id")}, inverseJoinColumns = {
-			@JoinColumn(name = "parent_id", referencedColumnName = "id")})
+			@JoinColumn(name = "parent_id", referencedColumnName = "id")}, inverseJoinColumns = {
+			@JoinColumn(name = "child_id", referencedColumnName = "id")})
 //	@JsonManagedReference(value = "parent-children")
 	public List<Node> getChildren()
 	{

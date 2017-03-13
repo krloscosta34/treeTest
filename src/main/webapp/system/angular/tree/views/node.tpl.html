@@ -1,4 +1,5 @@
 <div ng-attr-id="{{ 'ui-node-tree-' + node.id }}" ui-tree-handle
+     tooltip-popup-delay='1000' uib-tooltip='{{treeCtrl.getTooltipMsg(node)}}' tooltip-placement="top-left" tooltip-html="true"
      ng-click="treeCtrl.setActiveNode(node)"
      class="tree-node tree-node-content"
      ng-class="{'active': treeCtrl.isNodeActive(node)}">

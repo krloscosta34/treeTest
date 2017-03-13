@@ -37,6 +37,42 @@ public class NodeRest
 
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/findRootNodes")
+	public List<NodeVO> findRootNodes()
+	{
+		try
+		{
+			List<Node> nodeList = service.findRootNodes();
+			return NodeVO.buildList(nodeList, true);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Path("/findByDescription/{description}")
+	public List<NodeVO> findByDescription(
+			@PathParam("description")
+					String description)
+	{
+		try
+		{
+			List<Node> nodeList = service.findByDescription(description);
+			return NodeVO.buildHierarchicalTree(nodeList);
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			return null;
+		}
+	}
+
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
 	@Path("/findById/{id}")
 	public NodeVO findById(
 			@PathParam("id")
@@ -44,7 +80,8 @@ public class NodeRest
 	{
 		Node entity = service.findById(id);
 		if(entity != null)
-			return new NodeVO(entity.getId(), entity.getCode(), entity.getDescription(), entity.getNote());
+			return new NodeVO(entity.getId(), entity.getCode(), entity.getDescription(),
+					entity.getNote());
 		return null;
 	}
 
@@ -65,7 +102,8 @@ public class NodeRest
 			{
 				parent = service.findById(parentId);
 				if(parent == null)
-					throw new CustomException("Não foi possível encontrar o registro de nó pai para a criação!");
+					throw new CustomException(
+							"Não foi possível encontrar o registro de nó pai para a criação!");
 			}
 
 			entity.setCode(nodeVO.getCode());
@@ -75,7 +113,7 @@ public class NodeRest
 			entity = service.create(entity);
 
 			nodeVO.setId(entity.getId());
-//			response.setEntity(nodeVO);
+			//			response.setEntity(nodeVO);
 			response.setEntity(entity.getId());
 			return response;
 		}

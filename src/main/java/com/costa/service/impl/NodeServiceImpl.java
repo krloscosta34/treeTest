@@ -16,10 +16,25 @@ public class NodeServiceImpl implements NodeService
 	@Override
 	public List<Node> findAll()
 	{
-
 		//Aqui vão as regras de negócio
 
 		return dao.findAll();
+	}
+
+	@Override
+	public List<Node> findRootNodes()
+	{
+		//Aqui vão as regras de negócio
+
+		return dao.findRootNodes();
+	}
+
+	@Override
+	public List<Node> findByDescription(String description)
+	{
+		//Aqui vão as regras de negócio
+
+		return dao.findByDescription(description);
 	}
 
 	@Override

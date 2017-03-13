@@ -15,9 +15,21 @@
                 successFn(response);
             });
         };
+        
+        this.findRootNodes = function (successFn) {
+            _self.entityService.customGET("findRootNodes").then(function (response) {
+                successFn(response);
+            });
+        };
 
         this.findByFilter = function (filter, successFn) {
             _self.entityService.customGET("findByFilter", filter).then(function (response) {
+                successFn(response);
+            });
+        };
+        
+        this.findByDescription = function (description, successFn) {
+            _self.entityService.customGET("findByDescription/" + description).then(function (response) {
                 successFn(response);
             });
         };

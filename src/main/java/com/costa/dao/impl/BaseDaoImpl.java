@@ -25,6 +25,12 @@ public abstract class BaseDaoImpl<T extends BaseEntity> implements BaseDao<T>
 	}
 
 	@Override
+	public List<T> findByQuery(String query)
+	{
+		return this.entityManager.createQuery(query).getResultList();
+	}
+
+	@Override
 	public T findById(Long id, Class enttityClass)
 	{
 		return (T) this.entityManager.find(enttityClass, id);

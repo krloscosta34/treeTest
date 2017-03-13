@@ -11,6 +11,16 @@ public interface NodeService
 	public List<Node> findAll();
 
 	/**
+	 * Busca os nós raízes
+	 */
+	public List<Node> findRootNodes();
+
+	/**
+	 * Busca os nós por descrição
+	 */
+	public List<Node> findByDescription(String description);
+
+	/**
 	 * Busca um nó no banco pelo ID
 	 */
 	public Node findById(Long id);
