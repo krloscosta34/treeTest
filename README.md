@@ -1,29 +1,24 @@
-# README #
+# Tree Test System #
 
-This README would normally document whatever steps are necessary to get your application up and running.
+Esta é uma aplicação que representa uma estrutura de arvore. Além de exibir a estrutura ela permiti adicionar, editar, excluir os nós da arvore e também fazer busca pela descrição do nó.
 
-### What is this repository for? ###
+### Desenvolvimento do projeto ###
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+* Projeto Maven;
+* Java 8;
+* Hibernate;
+* MySQL;
+* Desenvolvido para Tomcat 9;
+* Backend em camadas REST, SERVICE, DAO;
+* Trafico de JSON entre back/front;
+* AngularJS 1.6.2.
 
-### How do I get set up? ###
+### Montando ambiente ###
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
-
-### Contribution guidelines ###
-
-* Writing tests
-* Code review
-* Other guidelines
-
-### Who do I talk to? ###
-
-* Repo owner or admin
-* Other community or team contact
+* Check in no projeto;
+* Importar como maven project;
+* Acessar o arquivo 'persistence.xml' e alterar base e credenciais do MySQL;
+* Montar o servidor:
+** Servidor Tomcat 9;
+** Adicionar deploy de artefato war exploded;
+** Adicionar "/TreeTest" como contexto da aplicação.
